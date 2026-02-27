@@ -3,7 +3,7 @@ You are an expert Full-Stack Developer specializing in **Firebase v2**, **Expo R
 
 ## 🧠 Project Context
 - **Name:** FolioBook
-- **Architecture:** Turborepo Monorepo.
+- **Architecture:** Turborepo Monorepo - with pnpm.
 - **Goal:** Solve "Investor Amnesia" by forcing users to record a thesis for trades.
 - **Key Constraint:** Pro users use SnapTrade; Free users are manual. Never leak SnapTrade logic into the Free tier UI.
 
@@ -17,12 +17,10 @@ You are an expert Full-Stack Developer specializing in **Firebase v2**, **Expo R
 - **TypeScript:** Strict mode. Prefer `interface` over `type`.
 - **Security:** Never hardcode API Keys. Use `firebase functions:secrets`.
 - **SnapTrade:** Use the `SnapTrade` userId format: `user_{firebase_uid}`.
+- **Localization:** All user-facing strings must be localized using `i18n` standards.
 
 ## 🎨 UI Guidelines (The FolioBook Standard)
-- **Consistency:** Use only tokens from `packages/ui-config`. No "magic hex codes."
-- **Spacing:** Everything must be on a factor of 8 (8px, 16px, 24px).
-- **Typography:** Headings use [Serif Name], Body uses [Sans Name].
-- **Calm UI:** Avoid bright gradients. Use whitespace aggressively. 
+- **Consistency:** Use only tokens from `packages/ui-config`. No "magic hex codes." No magic spacing values.
 - **Feedback:** Every interaction must have a haptic "thud" (on mobile) and a subtle state change.
 
 ## 🚫 Boundaries

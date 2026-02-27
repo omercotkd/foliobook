@@ -1,0 +1,7 @@
+{
+  "name": "@foliobook/ui-config",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./theme.ts",
+  "types": "./theme.ts"
+}
