@@ -54,12 +54,12 @@ export const Theme = {
   typography: {
     brandName: {
       fontFamily: "PlayfairDisplaySC_400Regular",
-      fontSize: 14,
+      fontSize: 20,
       letterSpacing: 6,
     },
     display: {
       fontFamily: "PlayfairDisplay_700Bold",
-      fontSize: 32,
+      fontSize: 30,
       letterSpacing: -0.5,
     },
     body: {

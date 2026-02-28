@@ -10,4 +10,8 @@ export default {
     privacyPolicy: "מדיניות הפרטיות",
     termsSuffix: ".",
   },
+  portfolio: {
+    title: "תיק השקעות",
+    searchPlaceholder: "חפש סימולים או שמות",
+  },
 } as const;

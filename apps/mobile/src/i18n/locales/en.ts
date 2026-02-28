@@ -10,4 +10,8 @@ export default {
     privacyPolicy: "Privacy Policy",
     termsSuffix: ".",
   },
+  portfolio: {
+    title: "Portfolio",
+    searchPlaceholder: "Search symbols or names",
+  },
 } as const;

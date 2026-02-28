@@ -74,7 +74,7 @@ export default function LoginScreen() {
             {
               color: colors.text.primary,
               fontFamily: typography.display.fontFamily,
-              fontSize: typography.display.fontSize + 16,
+              fontSize: 60,
               letterSpacing: typography.display.letterSpacing,
             },
           ]}
@@ -157,6 +157,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 24,
     justifyContent: "space-between",
+    
   },
   logoSection: {
     alignItems: "center",
