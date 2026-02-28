@@ -1,13 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTheme } from "@/providers";
-import { IconButton, SearchBar, PositionCard } from "@/components";
+import { IconButton, SearchBar, PositionCard, SwitchAccountModal } from "@/components";
 import { ArrowSwitchIcon } from "@/components/icons/ArrowSwitchIcon";
 import { ProfileIcon } from "@/components/icons/ProfileIcon";
 import { PlusIcon } from "@/components/icons/PlusIcon";
 import i18n from "@/i18n";
-import type { Position } from "@foliobook/shared-types";
+import type { Position, Portfolio } from "@foliobook/shared-types";
 
 // Mock data — will be replaced with Firestore/local data
 const MOCK_POSITIONS: Position[] = [
@@ -72,12 +72,45 @@ const MOCK_POSITIONS: Position[] = [
   },
 ];
 
+// Mock portfolio data — will be replaced with Firestore/local data
+const MOCK_PORTFOLIOS: Portfolio[] = [
+  {
+    id: "p1",
+    name: "Main Trading",
+    broker: "Interactive Brokers",
+    brokerAbbr: "IB",
+    avatarColor: "#C8B88A",
+  },
+  {
+    id: "p2",
+    name: "Growth Tech",
+    broker: "Robinhood",
+    brokerAbbr: "RH",
+    avatarColor: "#2C3E3A",
+  },
+  {
+    id: "p3",
+    name: "Retirement IRA",
+    broker: "Schwab",
+    brokerAbbr: "CS",
+    avatarColor: "#3A5A4A",
+  },
+  {
+    id: "p4",
+    name: "Dividend Fund",
+    broker: "Fidelity",
+    brokerAbbr: "FI",
+    avatarColor: "#4A5A4A",
+  },
+];
+
 export default function PortfolioScreen() {
   const { colors, typography, spacing } = useTheme();
+  const [switchAccountVisible, setSwitchAccountVisible] = useState(false);
+  const [currentPortfolioId, setCurrentPortfolioId] = useState("p1");
 
   const handleSwitchBroker = () => {
-    // TODO: Navigate to broker account switcher
-    console.log("Switch broker pressed");
+    setSwitchAccountVisible(true);
   };
 
   const handleProfile = () => {
@@ -149,6 +182,22 @@ export default function PortfolioScreen() {
           variant="floating"
         />
       </View>
+
+      {/* Switch Account Modal */}
+      <SwitchAccountModal
+        visible={switchAccountVisible}
+        onClose={() => setSwitchAccountVisible(false)}
+        currentPortfolioId={currentPortfolioId}
+        portfolios={MOCK_PORTFOLIOS}
+        onSelect={(portfolio) => {
+          setCurrentPortfolioId(portfolio.id);
+          setSwitchAccountVisible(false);
+        }}
+        onAddAccount={() => {
+          // TODO: Navigate to add account flow
+          console.log("Add account pressed");
+        }}
+      />
     </SafeAreaView>
   );
 }

@@ -23,3 +23,13 @@ export interface Position {
   stopLossPrice?: number;
   thesis?: Thesis;
 }
+
+export interface Portfolio {
+  id: string;
+  name: string;
+  broker: string;
+  /** Short abbreviation shown inside the avatar circle (e.g. "IB", "RH") */
+  brokerAbbr: string;
+  /** Hex color used for the portfolio avatar */
+  avatarColor: string;
+}

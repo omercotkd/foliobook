@@ -6,15 +6,15 @@ interface ArrowSwitchIconProps {
   color?: string;
 }
 
-export function ArrowSwitchIcon({ size = 22, color = "#1C1C1E" }: ArrowSwitchIconProps) {
+export function ArrowSwitchIcon({
+  size = 22,
+  color = "#4B5563",
+}: ArrowSwitchIconProps) {
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+    <Svg width={size} height={(size * 16) / 20} viewBox="0 0 20 16" fill="none">
       <Path
-        d="M7 16l-4-4m0 0l4-4m-4 4h18M17 8l4 4m0 0l-4 4m4-4H3"
-        stroke={color}
-        strokeWidth={1.8}
-        strokeLinecap="round"
-        strokeLinejoin="round"
+        d="M5 16L0 11L5 6L6.4 7.425L3.825 10H11V12H3.825L6.4 14.575L5 16ZM15 10L13.6 8.575L16.175 6H9V4H16.175L13.6 1.425L15 0L20 5L15 10Z"
+        fill={color}
       />
     </Svg>
   );

@@ -14,4 +14,10 @@ export default {
     title: "תיק השקעות",
     searchPlaceholder: "חפש סימולים או שמות",
   },
+  switchAccount: {
+    title: "החלף חשבון",
+    current: "נוכחי",
+    otherPortfolios: "תיקים נוספים",
+    addAccount: "הוסף חשבון",
+  },
 } as const;

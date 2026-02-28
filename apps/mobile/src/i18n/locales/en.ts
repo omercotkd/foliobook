@@ -14,4 +14,10 @@ export default {
     title: "Portfolio",
     searchPlaceholder: "Search symbols or names",
   },
+  switchAccount: {
+    title: "Switch Account",
+    current: "CURRENT",
+    otherPortfolios: "OTHER PORTFOLIOS",
+    addAccount: "Add Account",
+  },
 } as const;

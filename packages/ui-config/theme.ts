@@ -16,6 +16,7 @@ const palette = {
   grey400: "#AEAEB2",
   grey600: "#636366",
   grey700: "#6B7280",
+  grey800: "#4B5563"
 } as const;
 
 
