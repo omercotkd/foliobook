@@ -19,9 +19,20 @@ export interface Position {
   entryPrice: number;
   currentPrice: number;
   currency: string;
+  exchange?: string;
+  sector?: string;
   takeProfitPrice?: number;
   stopLossPrice?: number;
   thesis?: Thesis;
+}
+
+export interface NewsArticle {
+  id: string;
+  title: string;
+  source: string;
+  timeAgo: string;
+  summary: string;
+  url: string;
 }
 
 export interface Portfolio {

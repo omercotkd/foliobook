@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { router } from "expo-router";
 import { useTheme } from "@/providers";
-import { IconButton, SearchBar, PositionCard, SwitchAccountModal } from "@/components";
+import { IconButton, SearchBar, PositionCard, SwitchAccountModal, SettingsModal } from "@/components";
 import { ArrowSwitchIcon } from "@/components/icons/ArrowSwitchIcon";
 import { ProfileIcon } from "@/components/icons/ProfileIcon";
 import { PlusIcon } from "@/components/icons/PlusIcon";
@@ -107,6 +108,7 @@ const MOCK_PORTFOLIOS: Portfolio[] = [
 export default function PortfolioScreen() {
   const { colors, typography, spacing } = useTheme();
   const [switchAccountVisible, setSwitchAccountVisible] = useState(false);
+  const [settingsVisible, setSettingsVisible] = useState(false);
   const [currentPortfolioId, setCurrentPortfolioId] = useState("p1");
 
   const handleSwitchBroker = () => {
@@ -114,8 +116,7 @@ export default function PortfolioScreen() {
   };
 
   const handleProfile = () => {
-    // TODO: Navigate to profile screen
-    console.log("Profile pressed");
+    setSettingsVisible(true);
   };
 
   const handleAddPosition = () => {
@@ -168,7 +169,16 @@ export default function PortfolioScreen() {
         {/* Position cards */}
         <View style={[styles.cardsSection, { gap: spacing.sm }]}>
           {MOCK_POSITIONS.map((position) => (
-            <PositionCard key={position.id} position={position} />
+            <PositionCard
+              key={position.id}
+              position={position}
+              onPress={() =>
+                router.push({
+                  pathname: "/position",
+                  params: { positionId: position.id },
+                })
+              }
+            />
           ))}
         </View>
       </ScrollView>
@@ -182,6 +192,35 @@ export default function PortfolioScreen() {
           variant="floating"
         />
       </View>
+
+      {/* Settings Modal */}
+      <SettingsModal
+        visible={settingsVisible}
+        onClose={() => setSettingsVisible(false)}
+        displayName="John Smith"
+        membershipLabel={i18n.t("settings.premiumMember")}
+        notificationCount={2}
+        onAccountSettings={() => {
+          setSettingsVisible(false);
+          console.log("Account settings pressed");
+        }}
+        onSecurity={() => {
+          setSettingsVisible(false);
+          console.log("Security pressed");
+        }}
+        onNotifications={() => {
+          setSettingsVisible(false);
+          console.log("Notifications pressed");
+        }}
+        onHelpAndSupport={() => {
+          setSettingsVisible(false);
+          console.log("Help pressed");
+        }}
+        onLogOut={() => {
+          setSettingsVisible(false);
+          console.log("Log out pressed");
+        }}
+      />
 
       {/* Switch Account Modal */}
       <SwitchAccountModal

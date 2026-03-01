@@ -8,6 +8,7 @@ import {
   TouchableWithoutFeedback,
   ScrollView,
 } from "react-native";
+import { BlurView } from "expo-blur";
 import * as Haptics from "expo-haptics";
 import { useTheme } from "@/providers";
 import { CloseIcon } from "@/components/icons/CloseIcon";
@@ -138,9 +139,7 @@ export function SwitchAccountModal({
           {portfolio.broker}
         </Text>
       </View>
-      {showCheck && (
-        <CheckCircleIcon size={24} color={colors.primary.main} />
-      )}
+      {showCheck && <CheckCircleIcon size={24} color={colors.primary.main} />}
     </TouchableOpacity>
   );
 
@@ -152,7 +151,11 @@ export function SwitchAccountModal({
       onRequestClose={handleClose}
     >
       <TouchableWithoutFeedback onPress={handleClose}>
-        <View style={styles.overlay}>
+        <BlurView
+          intensity={85}
+          tint="default"
+          style={styles.overlay}
+        >
           <TouchableWithoutFeedback>
             <View
               style={[
@@ -188,7 +191,9 @@ export function SwitchAccountModal({
 
               {/* Current section */}
               {currentPortfolio && (
-                <View style={[styles.section, { paddingHorizontal: spacing.md }]}>
+                <View
+                  style={[styles.section, { paddingHorizontal: spacing.md }]}
+                >
                   <Text
                     style={[
                       styles.sectionLabel,
@@ -211,7 +216,9 @@ export function SwitchAccountModal({
 
               {/* Other portfolios section */}
               {otherPortfolios.length > 0 && (
-                <View style={[styles.section, { paddingHorizontal: spacing.md }]}>
+                <View
+                  style={[styles.section, { paddingHorizontal: spacing.md }]}
+                >
                   <Text
                     style={[
                       styles.sectionLabel,
@@ -272,7 +279,7 @@ export function SwitchAccountModal({
               </TouchableOpacity>
             </View>
           </TouchableWithoutFeedback>
-        </View>
+        </BlurView>
       </TouchableWithoutFeedback>
     </Modal>
   );
