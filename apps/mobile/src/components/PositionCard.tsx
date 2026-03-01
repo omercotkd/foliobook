@@ -5,9 +5,11 @@ import {
   StyleSheet,
   ScrollView,
   Dimensions,
+  TouchableOpacity,
   type NativeSyntheticEvent,
   type NativeScrollEvent,
 } from "react-native";
+import * as Haptics from "expo-haptics";
 import { useTheme } from "@/providers";
 import type { Position } from "@foliobook/shared-types";
 
@@ -16,9 +18,10 @@ const CARD_WIDTH = Dimensions.get("window").width - CARD_HORIZONTAL_MARGIN * 2;
 
 interface PositionCardProps {
   position: Position;
+  onPress?: () => void;
 }
 
-export function PositionCard({ position }: PositionCardProps) {
+export function PositionCard({ position, onPress }: PositionCardProps) {
   const { colors, typography, spacing, borderRadius } = useTheme();
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -324,8 +327,15 @@ export function PositionCard({ position }: PositionCardProps) {
     </View>
   );
 
+  const handleCardPress = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    onPress?.();
+  };
+
   return (
-    <View
+    <TouchableOpacity
+      activeOpacity={0.85}
+      onPress={handleCardPress}
       style={[
         styles.cardContainer,
         {
@@ -342,6 +352,7 @@ export function PositionCard({ position }: PositionCardProps) {
       <ScrollView
         horizontal
         pagingEnabled
+        nestedScrollEnabled
         showsHorizontalScrollIndicator={false}
         onScroll={handleScroll}
         scrollEventThrottle={16}
@@ -367,7 +378,7 @@ export function PositionCard({ position }: PositionCardProps) {
           />
         ))}
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 
