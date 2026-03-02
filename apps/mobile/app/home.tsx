@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import { useTheme } from "@/providers";
-import { IconButton, SearchBar, PositionCard, SwitchAccountModal, SettingsModal } from "@/components";
+import { IconButton, SearchBar, PositionCard, SwitchAccountModal, SettingsModal, SubscriptionModal } from "@/components";
 import { ArrowSwitchIcon } from "@/components/icons/ArrowSwitchIcon";
 import { ProfileIcon } from "@/components/icons/ProfileIcon";
 import { PlusIcon } from "@/components/icons/PlusIcon";
@@ -109,6 +109,7 @@ export default function PortfolioScreen() {
   const { colors, typography, spacing } = useTheme();
   const [switchAccountVisible, setSwitchAccountVisible] = useState(false);
   const [settingsVisible, setSettingsVisible] = useState(false);
+  const [subscriptionVisible, setSubscriptionVisible] = useState(false);
   const [currentPortfolioId, setCurrentPortfolioId] = useState("p1");
 
   const handleSwitchBroker = () => {
@@ -233,8 +234,19 @@ export default function PortfolioScreen() {
           setSwitchAccountVisible(false);
         }}
         onAddAccount={() => {
-          // TODO: Navigate to add account flow
-          console.log("Add account pressed");
+          setSwitchAccountVisible(false);
+          setSubscriptionVisible(true);
+        }}
+      />
+      {/* Subscription Modal */}
+      <SubscriptionModal
+        visible={subscriptionVisible}
+        onClose={() => setSubscriptionVisible(false)}
+        price="$9.99/mo"
+        onSubscribe={() => {
+          setSubscriptionVisible(false);
+          // TODO: Trigger App Store / Play Store payment
+          console.log("Subscribe pressed");
         }}
       />
     </SafeAreaView>

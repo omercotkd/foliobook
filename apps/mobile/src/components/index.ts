@@ -5,4 +5,5 @@ export { PositionCard } from "./PositionCard";
 export { SwitchAccountModal } from "./SwitchAccountModal";
 export { SettingsModal } from "./SettingsModal";
 export { PositionSettingsPopup } from "./PositionSettingsPopup";
+export { SubscriptionModal } from "./SubscriptionModal";
 export { GoogleIcon } from "./icons/GoogleIcon";
