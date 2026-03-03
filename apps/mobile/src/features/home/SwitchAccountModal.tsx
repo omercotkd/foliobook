@@ -11,7 +11,6 @@ import {
 import { BlurView } from "expo-blur";
 import * as Haptics from "expo-haptics";
 import { useTheme } from "@/providers";
-import { CloseIcon } from "@/components/icons/CloseIcon";
 import { CheckCircleIcon } from "@/components/icons/CheckCircleIcon";
 import { PlusCircleIcon } from "@/components/icons/PlusCircleIcon";
 import i18n from "@/i18n";
@@ -27,7 +26,7 @@ interface SwitchAccountModalProps {
 }
 
 const MAX_VISIBLE_ITEMS = 3;
-const ITEM_HEIGHT = 64;
+const ITEM_HEIGHT = 56;
 
 export function SwitchAccountModal({
   visible,
@@ -60,7 +59,7 @@ export function SwitchAccountModal({
 
   const PortfolioAvatar = ({
     portfolio,
-    size = 48,
+    size = 40,
   }: {
     portfolio: Portfolio;
     size?: number;
@@ -109,8 +108,7 @@ export function SwitchAccountModal({
         styles.portfolioRow,
         highlighted && {
           backgroundColor: colors.inputBackground,
-          borderRadius: borderRadius.medium,
-          paddingHorizontal: spacing.sm,
+          borderRadius: borderRadius.small,
         },
       ]}
     >
@@ -139,7 +137,7 @@ export function SwitchAccountModal({
           {portfolio.broker}
         </Text>
       </View>
-      {showCheck && <CheckCircleIcon size={24} color={colors.primary.main} />}
+      {showCheck && <CheckCircleIcon size={20} color={colors.primary.main} />}
     </TouchableOpacity>
   );
 
@@ -159,41 +157,39 @@ export function SwitchAccountModal({
           <TouchableWithoutFeedback>
             <View
               style={[
-                styles.modalContainer,
+                styles.popup,
                 {
                   backgroundColor: colors.surface,
-                  borderRadius: borderRadius.large,
+                  borderRadius: borderRadius.medium,
                 },
               ]}
             >
+              {/* Triangle pointer → points up toward the Switch button (top-left) */}
+              <View
+                style={[
+                  styles.triangle,
+                  { borderBottomColor: colors.surface },
+                ]}
+              />
+
               {/* Header */}
-              <View style={[styles.header, { paddingHorizontal: spacing.md }]}>
+              <View style={styles.header}>
                 <Text
                   style={[
                     styles.title,
                     {
                       color: colors.text.primary,
                       fontFamily: typography.display.fontFamily,
-                      fontSize: 24,
                     },
                   ]}
                 >
                   {i18n.t("switchAccount.title")}
                 </Text>
-                <TouchableOpacity
-                  onPress={handleClose}
-                  activeOpacity={0.7}
-                  hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
-                >
-                  <CloseIcon size={22} color={colors.text.secondary} />
-                </TouchableOpacity>
               </View>
 
               {/* Current section */}
               {currentPortfolio && (
-                <View
-                  style={[styles.section, { paddingHorizontal: spacing.md }]}
-                >
+                <View style={styles.section}>
                   <Text
                     style={[
                       styles.sectionLabel,
@@ -216,9 +212,7 @@ export function SwitchAccountModal({
 
               {/* Other portfolios section */}
               {otherPortfolios.length > 0 && (
-                <View
-                  style={[styles.section, { paddingHorizontal: spacing.md }]}
-                >
+                <View style={styles.section}>
                   <Text
                     style={[
                       styles.sectionLabel,
@@ -258,13 +252,12 @@ export function SwitchAccountModal({
                 style={[
                   styles.addAccountButton,
                   {
-                    borderTopWidth: 1,
+                    borderTopWidth: StyleSheet.hairlineWidth,
                     borderTopColor: colors.border,
-                    paddingVertical: spacing.sm,
                   },
                 ]}
               >
-                <PlusCircleIcon size={22} color={colors.text.disabled} />
+                <PlusCircleIcon size={20} color={colors.text.disabled} />
                 <Text
                   style={[
                     styles.addAccountText,
@@ -288,40 +281,56 @@ export function SwitchAccountModal({
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    backgroundColor: "rgba(0, 0, 0, 0.35)",
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 32,
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    paddingTop: 60,
+    paddingLeft: 20,
   },
-  modalContainer: {
-    width: "100%",
-    maxWidth: 400,
-    overflow: "hidden",
+  popup: {
+    width: 280,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.12,
+    shadowRadius: 16,
+    elevation: 8,
+  },
+  triangle: {
+    position: "absolute",
+    top: -10,
+    left: 14,
+    width: 0,
+    height: 0,
+    borderLeftWidth: 10,
+    borderRightWidth: 10,
+    borderBottomWidth: 10,
+    borderLeftColor: "transparent",
+    borderRightColor: "transparent",
   },
   header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingTop: 24,
-    paddingBottom: 8,
+    paddingHorizontal: 20,
+    paddingTop: 16,
+    paddingBottom: 4,
   },
   title: {
-    flex: 1,
+    fontSize: 18,
+    fontWeight: "700",
   },
   section: {
-    paddingTop: 12,
+    paddingHorizontal: 20,
+    paddingTop: 10,
     paddingBottom: 4,
   },
   sectionLabel: {
-    fontSize: 11,
+    fontSize: 10,
     fontWeight: "600",
-    marginBottom: 12,
+    marginBottom: 8,
   },
   portfolioRow: {
     flexDirection: "row",
     alignItems: "center",
     paddingVertical: 8,
-    gap: 14,
+    paddingHorizontal: 6,
+    gap: 12,
   },
   avatar: {
     alignItems: "center",
@@ -335,21 +344,22 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   portfolioName: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: "600",
-    marginBottom: 2,
+    marginBottom: 1,
   },
   portfolioBroker: {
-    fontSize: 13,
+    fontSize: 12,
   },
   addAccountButton: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
+    paddingVertical: 14,
     gap: 8,
   },
   addAccountText: {
-    fontSize: 15,
+    fontSize: 14,
     fontWeight: "500",
   },
 });

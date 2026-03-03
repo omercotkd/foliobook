@@ -61,23 +61,23 @@ export function SettingsModal({
 
   const menuItems = [
     {
-      icon: <AccountSettingsIcon size={22} color={colors.text.secondary} />,
+      icon: <AccountSettingsIcon size={20} color={colors.text.secondary} />,
       label: i18n.t("settings.accountSettings"),
       onPress: onAccountSettings,
     },
     {
-      icon: <ShieldIcon size={22} color={colors.text.secondary} />,
+      icon: <ShieldIcon size={20} color={colors.text.secondary} />,
       label: i18n.t("settings.security"),
       onPress: onSecurity,
     },
     {
-      icon: <BellIcon size={22} color={colors.text.secondary} />,
+      icon: <BellIcon size={20} color={colors.text.secondary} />,
       label: i18n.t("settings.notifications"),
       onPress: onNotifications,
       badge: notificationCount > 0 ? `${notificationCount} ${i18n.t("settings.newBadge")}` : undefined,
     },
     {
-      icon: <HelpCircleIcon size={22} color={colors.text.secondary} />,
+      icon: <HelpCircleIcon size={20} color={colors.text.secondary} />,
       label: i18n.t("settings.helpAndSupport"),
       onPress: onHelpAndSupport,
     },
@@ -93,20 +93,27 @@ export function SettingsModal({
       <TouchableWithoutFeedback onPress={handleClose}>
         <BlurView
           intensity={85}
-          
           tint="default"
           style={styles.overlay}
         >
           <TouchableWithoutFeedback>
             <View
               style={[
-                styles.modalContainer,
+                styles.popup,
                 {
                   backgroundColor: colors.surface,
-                  borderRadius: borderRadius.large,
+                  borderRadius: borderRadius.medium,
                 },
               ]}
             >
+              {/* Triangle pointer → points up toward the Profile button (top-right) */}
+              <View
+                style={[
+                  styles.triangle,
+                  { borderBottomColor: colors.surface },
+                ]}
+              />
+
               {/* Avatar Section */}
               <View style={styles.avatarSection}>
                 <View style={styles.avatarWrapper}>
@@ -116,7 +123,7 @@ export function SettingsModal({
                       { backgroundColor: colors.border },
                     ]}
                   >
-                    <ProfileIcon size={40} color={colors.primary.main} />
+                    <ProfileIcon size={32} color={colors.primary.main} />
                   </View>
                   <TouchableOpacity
                     onPress={() => handlePress(onEditAvatar)}
@@ -129,7 +136,7 @@ export function SettingsModal({
                       },
                     ]}
                   >
-                    <EditIcon size={14} color={colors.text.primary} />
+                    <EditIcon size={12} color={colors.text.primary} />
                   </TouchableOpacity>
                 </View>
 
@@ -160,14 +167,23 @@ export function SettingsModal({
                 )}
               </View>
 
+              {/* Divider */}
+              <View style={[styles.divider, { backgroundColor: colors.border }]} />
+
               {/* Menu Items */}
-              <View style={[styles.menuSection, { paddingHorizontal: spacing.md }]}>
+              <View style={styles.menuSection}>
                 {menuItems.map((item, index) => (
                   <TouchableOpacity
                     key={index}
                     onPress={() => handlePress(item.onPress)}
                     activeOpacity={0.7}
-                    style={styles.menuRow}
+                    style={[
+                      styles.menuRow,
+                      index < menuItems.length - 1 && {
+                        borderBottomWidth: StyleSheet.hairlineWidth,
+                        borderBottomColor: colors.border,
+                      },
+                    ]}
                   >
                     <View style={styles.menuRowLeft}>
                       {item.icon}
@@ -204,56 +220,35 @@ export function SettingsModal({
                           </Text>
                         </View>
                       )}
-                      <ChevronRightIcon size={18} color={colors.text.disabled} />
+                      <ChevronRightIcon size={16} color={colors.text.disabled} />
                     </View>
                   </TouchableOpacity>
                 ))}
               </View>
 
-              {/* Log Out Button */}
-              <View style={[styles.logOutSection, { paddingHorizontal: spacing.md }]}>
-                <TouchableOpacity
-                  onPress={() => handlePress(onLogOut)}
-                  activeOpacity={0.7}
-                  style={[
-                    styles.logOutButton,
-                    {
-                      backgroundColor: colors.danger.subtle,
-                      borderRadius: borderRadius.medium,
-                    },
-                  ]}
-                >
-                  <LogOutIcon size={20} color={colors.danger.main} />
-                  <Text
-                    style={[
-                      styles.logOutText,
-                      {
-                        color: colors.danger.main,
-                        fontFamily: typography.body.fontFamily,
-                      },
-                    ]}
-                  >
-                    {i18n.t("settings.logOut")}
-                  </Text>
-                </TouchableOpacity>
-              </View>
-
-              {/* Close Settings */}
+              {/* Log Out */}
               <TouchableOpacity
-                onPress={handleClose}
+                onPress={() => handlePress(onLogOut)}
                 activeOpacity={0.7}
-                style={styles.closeButton}
+                style={[
+                  styles.logOutRow,
+                  {
+                    borderTopWidth: StyleSheet.hairlineWidth,
+                    borderTopColor: colors.border,
+                  },
+                ]}
               >
+                <LogOutIcon size={20} color={colors.danger.main} />
                 <Text
                   style={[
-                    styles.closeText,
+                    styles.logOutText,
                     {
-                      color: colors.text.secondary,
+                      color: colors.danger.main,
                       fontFamily: typography.body.fontFamily,
                     },
                   ]}
                 >
-                  {i18n.t("settings.closeSettings")}
+                  {i18n.t("settings.logOut")}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -267,30 +262,45 @@ export function SettingsModal({
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    backgroundColor: "rgba(0, 0, 0, 0.35)",
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 32,
+    justifyContent: "flex-start",
+    alignItems: "flex-end",
+    paddingTop: 60,
+    paddingRight: 20,
   },
-  modalContainer: {
-    width: "100%",
-    maxWidth: 400,
-    overflow: "hidden",
-    paddingBottom: 20,
+  popup: {
+    width: 280,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.12,
+    shadowRadius: 16,
+    elevation: 8,
+  },
+  triangle: {
+    position: "absolute",
+    top: -10,
+    right: 14,
+    width: 0,
+    height: 0,
+    borderLeftWidth: 10,
+    borderRightWidth: 10,
+    borderBottomWidth: 10,
+    borderLeftColor: "transparent",
+    borderRightColor: "transparent",
   },
   avatarSection: {
     alignItems: "center",
-    paddingTop: 32,
+    paddingTop: 20,
     paddingBottom: 8,
+    paddingHorizontal: 20,
   },
   avatarWrapper: {
     position: "relative",
-    marginBottom: 16,
+    marginBottom: 10,
   },
   avatar: {
-    width: 88,
-    height: 88,
-    borderRadius: 44,
+    width: 64,
+    height: 64,
+    borderRadius: 32,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -298,78 +308,71 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 0,
     right: 0,
-    width: 28,
-    height: 28,
-    borderRadius: 14,
+    width: 24,
+    height: 24,
+    borderRadius: 12,
     borderWidth: 2,
     alignItems: "center",
     justifyContent: "center",
   },
   displayName: {
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: "700",
-    marginBottom: 4,
+    marginBottom: 2,
   },
   membershipLabel: {
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: "500",
-    marginBottom: 8,
+    marginBottom: 4,
+  },
+  divider: {
+    height: StyleSheet.hairlineWidth,
+    marginHorizontal: 20,
   },
   menuSection: {
-    paddingTop: 12,
-    paddingBottom: 8,
+    paddingVertical: 4,
   },
   menuRow: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingVertical: 16,
+    paddingVertical: 14,
+    paddingHorizontal: 20,
   },
   menuRowLeft: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 16,
+    gap: 12,
   },
   menuRowRight: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 8,
+    gap: 6,
   },
   menuLabel: {
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: "500",
   },
   badge: {
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    borderRadius: 12,
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 10,
   },
   badgeText: {
-    fontSize: 11,
+    fontSize: 10,
     fontWeight: "700",
     letterSpacing: 0.5,
   },
-  logOutSection: {
-    paddingTop: 8,
-    paddingBottom: 8,
-  },
-  logOutButton: {
+  logOutRow: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: 16,
-    gap: 10,
+    paddingVertical: 14,
+    paddingHorizontal: 20,
+    gap: 8,
   },
   logOutText: {
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: "600",
-  },
-  closeButton: {
-    alignItems: "center",
-    paddingTop: 8,
-  },
-  closeText: {
-    fontSize: 14,
-    fontWeight: "500",
   },
 });
