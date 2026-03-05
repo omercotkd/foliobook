@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import * as Haptics from "expo-haptics";
 import { router } from "expo-router";
 import { useTheme } from "@/providers";
 import { IconButton, SearchBar, PositionCard } from "@/components";
@@ -8,6 +9,7 @@ import { ArrowSwitchIcon } from "@/components/icons/ArrowSwitchIcon";
 import { ProfileIcon } from "@/components/icons/ProfileIcon";
 import { PlusIcon } from "@/components/icons/PlusIcon";
 import { SwitchAccountModal } from "./SwitchAccountModal";
+import { AddPositionModal } from "./AddPositionModal";
 import { SettingsModal } from "@/features/settings/SettingsModal";
 import { SubscriptionModal } from "@/features/subscription/SubscriptionModal";
 import i18n from "@/i18n";
@@ -113,6 +115,7 @@ export function HomeScreen() {
   const [switchAccountVisible, setSwitchAccountVisible] = useState(false);
   const [settingsVisible, setSettingsVisible] = useState(false);
   const [subscriptionVisible, setSubscriptionVisible] = useState(false);
+  const [addPositionVisible, setAddPositionVisible] = useState(false);
   const [currentPortfolioId, setCurrentPortfolioId] = useState("p1");
 
   const handleSwitchBroker = () => {
@@ -124,8 +127,8 @@ export function HomeScreen() {
   };
 
   const handleAddPosition = () => {
-    // TODO: Navigate to add position flow
-    console.log("Add position pressed");
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    setAddPositionVisible(true);
   };
 
   return (
@@ -241,6 +244,16 @@ export function HomeScreen() {
           setSubscriptionVisible(true);
         }}
       />
+      {/* Add Position Modal */}
+      <AddPositionModal
+        visible={addPositionVisible}
+        onClose={() => setAddPositionVisible(false)}
+        onSave={(data) => {
+          setAddPositionVisible(false);
+          console.log("New position:", data);
+        }}
+      />
+
       {/* Subscription Modal */}
       <SubscriptionModal
         visible={subscriptionVisible}
