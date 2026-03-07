@@ -18,7 +18,7 @@ import {
 import {
   IBMPlexSans_500Medium,
 } from "@expo-google-fonts/ibm-plex-sans";
-import { ThemeProvider } from "@/providers";
+import { ThemeProvider, AuthProvider } from "@/providers";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -49,8 +49,10 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider>
-      <StatusBar style="dark" />
-      <Slot />
+      <AuthProvider>
+        <StatusBar style="dark" />
+        <Slot />
+      </AuthProvider>
     </ThemeProvider>
   );
 }

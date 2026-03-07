@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "305208648396",
+    "project_id": "foliobook-690de",
+    "storage_bucket": "foliobook-690de.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:305208648396:android:7a622039a8450cf4eed869",
+        "android_client_info": {
+          "package_name": "com.foliobook.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "305208648396-kh8ok8s5843aonjigp4hllmr8t2e63of.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAeMbvkbPUuqerCcd7WZicUqEz01ZoQ-rY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "305208648396-kh8ok8s5843aonjigp4hllmr8t2e63of.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

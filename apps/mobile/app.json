@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "foliobook-mobile",
-    "slug": "foliobook-mobile",
+    "name": "foliobook",
+    "slug": "foliobook",
     "version": "1.0.0",
     "scheme": "foliobook",
     "orientation": "portrait",
@@ -20,8 +20,9 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#F5F5F0"
       },
+      "googleServicesFile": "./google-services.json",
       "predictiveBackGestureEnabled": false,
-      "package": "com.anonymous.foliobookmobile"
+      "package": "com.foliobook.app"
     },
     "web": {
       "favicon": "./assets/favicon.png",
@@ -30,7 +31,8 @@
     "plugins": [
       "expo-router",
       "expo-localization",
-      "expo-font"
+      "expo-font",
+      "@react-native-google-signin/google-signin"
     ]
   }
 }

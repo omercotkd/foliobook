@@ -1,15 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
   Linking,
+  Alert,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Haptics from "expo-haptics";
 import { router } from "expo-router";
 import { useTheme } from "@/providers";
+import { useAuth } from "@/providers/AuthProvider";
 import { Button } from "@/components";
 import { GoogleIcon } from "@/components/icons/GoogleIcon";
 import { LogoIcon } from "@/components/icons/LogoIcon";
@@ -17,22 +19,34 @@ import i18n from "@/i18n";
 
 export function LoginScreen() {
   const { colors, typography, spacing, borderRadius } = useTheme();
+  const { signInWithGoogle } = useAuth();
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
 
-  const handleGoogleLogin = () => {
+  const handleGoogleLogin = async () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-    // TODO: Wire up Firebase Google Auth
-    console.log("Google login pressed");
+    setIsGoogleLoading(true);
+
+    try {
+      await signInWithGoogle();
+      router.replace("/home");
+    } catch (error) {
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+      Alert.alert(
+        i18n.t("welcome.errorTitle"),
+        i18n.t("welcome.googleErrorMessage")
+      );
+    } finally {
+      setIsGoogleLoading(false);
+    }
   };
 
   const handleEmailLogin = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-    // TODO: Navigate to email auth screen
-    console.log("Email login pressed");
+    router.push("/auth/email");
   };
 
   const handleGuestContinue = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    // TODO: Navigate to main app in guest mode
     router.replace("/home");
   };
 
@@ -89,6 +103,7 @@ export function LoginScreen() {
             onPress={handleGoogleLogin}
             variant="secondary"
             icon={<GoogleIcon size={22} />}
+            loading={isGoogleLoading}
           />
           <Button
             label={i18n.t("welcome.signInWithEmail")}
