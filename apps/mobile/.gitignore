@@ -39,3 +39,6 @@ yarn-error.*
 # generated native folders
 /ios
 /android
+
+# Weird that this is considered a sensitive file, but is included in the app bundle
+google-services.json
